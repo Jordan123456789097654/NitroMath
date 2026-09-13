@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  initWelcomeBackModal();
   setInterval(checkStatusAndAnnouncements, 15000);
 });
 
@@ -1969,4 +1970,22 @@ async function initWeatherClock() {
 
   await updateWeather();
   setInterval(updateWeather, 600000);
+}
+
+function initWelcomeBackModal() {
+  const modal = document.getElementById('welcome-back-modal');
+  const enterBtn = document.getElementById('welcome-back-enter-btn');
+  if (!modal) return;
+
+  const hasSeen = localStorage.getItem('nitro_seen_welcome_back_v2');
+  if (!hasSeen) {
+    modal.style.display = 'block';
+  }
+
+  if (enterBtn) {
+    enterBtn.addEventListener('click', () => {
+      localStorage.setItem('nitro_seen_welcome_back_v2', 'true');
+      modal.style.display = 'none';
+    });
+  }
 }

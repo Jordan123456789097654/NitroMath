@@ -188,6 +188,78 @@
   </style>
 </head>
 <body>
+  <!-- FULL-SCREEN TAKEOVER WELCOME BACK MODAL (ON SHUTDOWN LIFT) -->
+  <div id="welcome-back-modal" style="display: none; position: fixed; inset: 0; background: radial-gradient(140% 140% at 50% 0%, #0d121f 0%, #05070c 100%); z-index: 99999999; overflow-y: auto; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div style="max-width: 1040px; margin: 60px auto; padding: 40px 24px; position: relative;">
+      
+      <!-- Top Glow Badge & Header -->
+      <div style="text-align: center; margin-bottom: 40px;">
+        <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; padding: 6px 16px; border-radius: 99px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);">
+          <span>⚡ PLATFORM RESTORED & OPERATIONAL</span>
+        </div>
+        <h1 style="font-size: 3.5rem; font-weight: 900; letter-spacing: -0.04em; background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 12px; line-height: 1.1;">
+          WELCOME BACK TO NITRO WORKSPACE
+        </h1>
+        <p style="font-size: 1.15rem; color: #94a3b8; max-width: 720px; margin: 0 auto; line-height: 1.6; font-weight: 500;">
+          The platform shutdown has been officially lifted! All services, AI models, visitor radar maps, community features, and proxy engines are running at maximum performance.
+        </p>
+      </div>
+
+      <!-- Feature Breakdowns Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px;">
+        
+        <!-- Category 10: Security & Account Systems -->
+        <div style="background: rgba(18, 24, 38, 0.8); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 24px; backdrop-filter: blur(12px);">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🛡️</div>
+          <h3 style="font-size: 1.2rem; font-weight: 800; color: #38bdf8; margin: 0 0 10px;">10. Security & Account Systems</h3>
+          <ul style="list-style: none; padding: 0; margin: 0; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; display: flex; flex-direction: column; gap: 8px;">
+            <li><strong>📢 Global Broadcast System:</strong> Push live announcements or modal alerts to all online users instantly.</li>
+            <li><strong>📡 Real-Time Live Visitor Radar:</strong> Interactive US map tracking live concurrent visitors & active routes.</li>
+            <li><strong>🔒 HWID & IP Banning:</strong> Device & IP restriction system with Supreme Owner bypass keys.</li>
+            <li><strong>⚡ Speed Tester:</strong> Real-time latency monitor checking proxy response times and WebSocket ping.</li>
+            <li><strong>🤖 AI Homework Assistant:</strong> Kyro LLM powered chat assistant for math, coding, and essay drafting.</li>
+          </ul>
+        </div>
+
+        <!-- Category 6: Visual Customization & Aesthetic Studio -->
+        <div style="background: rgba(18, 24, 38, 0.8); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 16px; padding: 24px; backdrop-filter: blur(12px);">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🎨</div>
+          <h3 style="font-size: 1.2rem; font-weight: 800; color: #c084fc; margin: 0 0 10px;">6. Visual Customization & Aesthetic Studio</h3>
+          <ul style="list-style: none; padding: 0; margin: 0; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; display: flex; flex-direction: column; gap: 8px;">
+            <li><strong>🌈 Theme Studio:</strong> Preset themes (OLED Dark, Cyberpunk 2077, Midnight Purple, Cherry Blossom, CRT Matrix).</li>
+            <li><strong>✨ Particle Engines:</strong> Background particle FX (Matrix rain, Falling Snow, Floating Orbs, Starfield, Neon Dust).</li>
+            <li><strong>🖱️ Custom Cursor Packs:</strong> Gaming cursors, retro crosshairs, neon pointers, and particle trails.</li>
+            <li><strong>👓 Accessibility:</strong> Glassmorphism backdrop blur intensity sliders and high-contrast mode.</li>
+            <li><strong>🔤 Custom Typography:</strong> Switch fonts between Plus Jakarta Sans, Outfit, Fira Code, and Inter.</li>
+            <li><strong>🛡️ Ad & Tracker Blocker:</strong> Built-in blocker stripping tracking scripts inside proxied pages.</li>
+            <li><strong>🌊 History Flooding:</strong> Flood browser history with legitimate educational URLs to hide site visits.</li>
+          </ul>
+        </div>
+
+        <!-- Category 2: Community, Chat & Social Ecosystem -->
+        <div style="background: rgba(18, 24, 38, 0.8); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 24px; backdrop-filter: blur(12px);">
+          <div style="font-size: 2rem; margin-bottom: 12px;">💬</div>
+          <h3 style="font-size: 1.2rem; font-weight: 800; color: #34d399; margin: 0 0 10px;">2. Community, Chat & Social Ecosystem</h3>
+          <ul style="list-style: none; padding: 0; margin: 0; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; display: flex; flex-direction: column; gap: 8px;">
+            <li><strong>🌐 Global Chat Suite:</strong> Real-time persistent chat powered by NitroDB with multi-room support.</li>
+            <li><strong>💌 Direct Messaging:</strong> Private encrypted 1-on-1 chats and friend requests.</li>
+            <li><strong>🏆 Tournaments & Jams:</strong> Live high-score competitions with real coin & XP rewards.</li>
+            <li><strong>⭐ Player Profiles:</strong> Custom avatar borders, custom chat glows, title flairs, and level badges.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Action Button -->
+      <div style="text-align: center;">
+        <button id="welcome-back-enter-btn" style="background: linear-gradient(135deg, #e11d48 0%, #be123c 100%); color: #ffffff; border: none; font-size: 1.15rem; font-weight: 900; padding: 16px 48px; border-radius: 99px; cursor: pointer; box-shadow: 0 0 35px rgba(225, 29, 72, 0.4); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseenter="this.style.transform='scale(1.04)';" onmouseleave="this.style.transform='scale(1)';">
+          🚀 ENTER WORKSPACE NOW
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- UN-BYPASSABLE ACCOUNT BANNED OVERLAY -->
   <div id="account-banned-overlay" style="display: none; position: fixed; inset: 0; background: #0b0d13; z-index: 99999999; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; color: #fff; overflow-y: auto;">
     <h1 style="font-size: 2.2rem; font-weight: 800; color: #f87171; letter-spacing: -0.02em; margin: 0 0 10px;">
