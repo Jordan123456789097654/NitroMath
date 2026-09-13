@@ -22,6 +22,8 @@ import { hrefs, marks } from "@/lib/uiMarks";
 import ObfuscatedText from "./ObfuscatedText";
 import LiveVisitorRadar from "./LiveVisitorRadar";
 import NetworkPingTester from "./NetworkPingTester";
+import { CURSOR_PACKS, applyCustomCursor } from "@/lib/customCursors";
+import { type ParticleEffectType } from "./CanvasParticleEngine";
 import {
   SHORTCUT_META,
   DEFAULT_SHORTCUTS,
@@ -475,6 +477,43 @@ export function AppearanceSettings(props: Props) {
           }}
         />
       </div>
+
+      <div style={{ height: 1, background: C.border, margin: "18px 0" }} />
+
+      <p style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: C.textMuted, margin: "0 0 8px" }}>
+        Canvas Particle FX Engine
+      </p>
+      <FancySelect
+        C={C}
+        value={localStorage.getItem("nitro_particle_effect") || "none"}
+        options={[
+          { id: "none", label: "Disabled (Clean)" },
+          { id: "matrix", label: "Matrix Rain FX" },
+          { id: "snow", label: "Falling Snow" },
+          { id: "orbs", label: "Floating Orbs" },
+          { id: "starfield", label: "Starfield Warp" },
+          { id: "dust", label: "Neon Dust" },
+        ]}
+        onChange={(id) => {
+          localStorage.setItem("nitro_particle_effect", id);
+          window.dispatchEvent(new CustomEvent("petezah-settings-updated"));
+        }}
+      />
+
+      <div style={{ height: 1, background: C.border, margin: "18px 0" }} />
+
+      <p style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: C.textMuted, margin: "0 0 8px" }}>
+        Custom Cursor Packs
+      </p>
+      <FancySelect
+        C={C}
+        value={localStorage.getItem("nitro_custom_cursor") || "default"}
+        options={CURSOR_PACKS.map(p => ({ id: p.id, label: p.label }))}
+        onChange={(id) => {
+          applyCustomCursor(id as any);
+          window.dispatchEvent(new CustomEvent("petezah-settings-updated"));
+        }}
+      />
 
       <NetworkPingTester C={C} />
       <LiveVisitorRadar C={C} />
