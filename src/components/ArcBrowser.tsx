@@ -23,7 +23,9 @@ import {
   unwrapProxyUrl,
   type OpenTabRequest,
 } from "@/lib/openTabBridge";
-import { hrefs } from "@/lib/uiMarks";
+import { hrefs } from "@/lib/openTabBridge";
+import CanvasParticleEngine, { type ParticleEffectType } from "@/components/CanvasParticleEngine";
+import { initCursorTrail, applyCustomCursor } from "@/lib/customCursors";
 
 function getPresenceClientId() {
   try {
@@ -54,13 +56,19 @@ export default function ArcBrowser() {
     : undefined;
   const [zoomLevel, setZoomLevel] = useState(100);
   const [gameFocus, setGameFocus] = useState(() => localStorage.getItem(hrefs.gf()) === "true");
-  const [horizontalTabs, setHorizontalTabs] = useState(
-    () => localStorage.getItem("horizontalTabs") === "true"
+  const [particleEffect, setParticleEffect] = useState<ParticleEffectType>(
+    () => (localStorage.getItem("nitro_particle_effect") as ParticleEffectType) || "none"
   );
+
   useEffect(() => {
+    initCursorTrail();
+    const savedCursor = localStorage.getItem("nitro_custom_cursor");
+    if (savedCursor) applyCustomCursor(savedCursor as any);
+
     const sync = () => {
       setGameFocus(localStorage.getItem(hrefs.gf()) === "true");
       setHorizontalTabs(localStorage.getItem("horizontalTabs") === "true");
+      setParticleEffect((localStorage.getItem("nitro_particle_effect") as ParticleEffectType) || "none");
     };
     window.addEventListener("petezah-settings-updated", sync);
     return () => window.removeEventListener("petezah-settings-updated", sync);
@@ -315,6 +323,7 @@ export default function ArcBrowser() {
       }}
     >
       <VantaBackground />
+      <CanvasParticleEngine effect={particleEffect} />
       <DebugHud />
       <div
         style={{
