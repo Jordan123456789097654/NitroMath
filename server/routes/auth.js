@@ -105,9 +105,9 @@ router.get('/me', async (req, res) => {
     return res.json({ loggedIn: false, user: null });
   }
 
-  // 🔐 Strict Session Invalidation: Reject any token without valid token_version or with token_version < user.token_version
-  const requiredTokenVersion = user.token_version || 1;
-  if (!tokenVersion || Number(tokenVersion) < Number(requiredTokenVersion)) {
+  // 🔐 Session Verification: Only invalidate if token has explicit token_version AND user has higher token_version in DB
+  const userTokenVersion = user.token_version ? Number(user.token_version) : null;
+  if (tokenVersion !== null && userTokenVersion !== null && Number(tokenVersion) < userTokenVersion) {
     res.clearCookie('nitro_jwt_token', { path: '/' });
     if (req.session) req.session.destroy(() => {});
     return res.status(401).json({ loggedIn: false, user: null, error: 'Session expired due to security reset. Please log in again.' });
