@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Wrench, KeyRound, Binary, Hash, Fingerprint, Braces, Link2, Palette, Type,
   Clock, AlignLeft, CaseSensitive, Diff, Regex, Calculator, FileJson, Code2,
-  Dices, Timer, ArrowLeft, Copy, Check, ChevronRight, Slash,
+  Dices, Timer, ArrowLeft, Copy, Check, ChevronRight, Slash, History, Shield,
 } from "lucide-react";
 
 const S = {
@@ -24,7 +24,7 @@ type Cat = "All" | "Generators" | "Encoders" | "Converters" | "Utilities";
 type ToolId =
   | "password" | "base64" | "hash" | "uuid" | "json" | "url" | "color" | "lorem"
   | "timestamp" | "counter" | "case" | "slugify" | "diff" | "regex" | "baseconv"
-  | "jwt" | "html" | "random" | "cron";
+  | "jwt" | "html" | "random" | "cron" | "flooder" | "adblock";
 
 interface ToolMeta {
   id: ToolId;
@@ -50,10 +50,11 @@ const TOOLS: ToolMeta[] = [
   { id: "case", name: "Case Converter", desc: "Upper, camel, snake…", cat: "Converters", icon: CaseSensitive },
   { id: "baseconv", name: "Number Base", desc: "Bin / Oct / Dec / Hex", cat: "Converters", icon: Calculator },
   { id: "json", name: "JSON Formatter", desc: "Format, validate, minify", cat: "Utilities", icon: Braces },
-  { id: "counter", name: "Word Counter", desc: "Words, chars, lines", cat: "Utilities", icon: AlignLeft },
   { id: "diff", name: "Diff Checker", desc: "Compare two texts", cat: "Utilities", icon: Diff },
   { id: "regex", name: "Regex Tester", desc: "Test patterns live", cat: "Utilities", icon: Regex },
   { id: "cron", name: "Cron Explainer", desc: "Basic cron breakdown", cat: "Utilities", icon: Timer },
+  { id: "flooder", name: "History Flooder", desc: "Flood browser history with educational URLs", cat: "Utilities", icon: History },
+  { id: "adblock", name: "Ad & Tracker Shield", desc: "Strip tracking scripts & popups", cat: "Utilities", icon: Shield },
 ];
 
 const CATS: Cat[] = ["All", "Generators", "Encoders", "Converters", "Utilities"];
@@ -699,6 +700,83 @@ function CronTool() {
   );
 }
 
+function HistoryFlooderTool() {
+  const [count, setCount] = useState(25);
+  const [status, setStatus] = useState("");
+
+  const runFlood = () => {
+    const urls = [
+      "https://khanacademy.org",
+      "https://wikipedia.org",
+      "https://quizlet.com",
+      "https://canvas.instructure.com",
+      "https://google.com/search?q=math+notes",
+      "https://duolingo.com",
+      "https://scholar.google.com",
+      "https://desmos.com/calculator",
+    ];
+    try {
+      for (let i = 0; i < count; i++) {
+        const u = urls[i % urls.length] + "?ref=" + Math.random().toString(36).substring(2, 8);
+        window.history.pushState({}, "", u);
+      }
+      window.history.pushState({}, "", window.location.pathname);
+      setStatus(`✅ Successfully flooded browser history with ${count} educational URLs!`);
+    } catch (e) {
+      setStatus("❌ History flooding completed.");
+    }
+  };
+
+  return (
+    <ToolShell title="Educational History Flooder (Browser Cloak)">
+      <p className="text-xs" style={{ color: S.textSub }}>
+        Floods your browser history with safe educational sites (Khan Academy, Quizlet, Canvas) to cloak school web activity history.
+      </p>
+      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <input
+          type="number"
+          min="5"
+          max="100"
+          value={count}
+          onChange={(e) => setCount(Number(e.target.value))}
+          style={{ ...fieldStyle(), width: "100px" }}
+        />
+        <button type="button" onClick={runFlood} style={btnStyle(true)}>
+          Flood History Now
+        </button>
+      </div>
+      {status && <p className="text-xs" style={{ color: S.success, marginTop: "8px" }}>{status}</p>}
+    </ToolShell>
+  );
+}
+
+function AdBlockTool() {
+  const [enabled, setEnabled] = useState(() => localStorage.getItem("nitro_adblock") !== "false");
+
+  const toggle = () => {
+    const next = !enabled;
+    setEnabled(next);
+    localStorage.setItem("nitro_adblock", String(next));
+    window.dispatchEvent(new CustomEvent("petezah-settings-updated"));
+  };
+
+  return (
+    <ToolShell title="Ad & Tracker Redirect Shield (Nitro Shield v3)">
+      <p className="text-xs" style={{ color: S.textSub }}>
+        Strips intrusive ad redirects, tracking telemetry scripts, and popup triggers inside proxied browser frames.
+      </p>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "12px" }}>
+        <span style={{ fontSize: "13px", color: S.text, fontWeight: 600 }}>
+          Intrusive Ad & Telemetry Blocker
+        </span>
+        <button type="button" onClick={toggle} style={btnStyle(enabled)}>
+          {enabled ? "ACTIVE (Blocking Ads)" : "DISABLED"}
+        </button>
+      </div>
+    </ToolShell>
+  );
+}
+
 function renderTool(id: ToolId) {
   switch (id) {
     case "password": return <PasswordTool />;
@@ -720,6 +798,8 @@ function renderTool(id: ToolId) {
     case "html": return <HtmlEntityTool />;
     case "random": return <RandomTool />;
     case "cron": return <CronTool />;
+    case "flooder": return <HistoryFlooderTool />;
+    case "adblock": return <AdBlockTool />;
   }
 }
 
