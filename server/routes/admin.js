@@ -3019,4 +3019,64 @@ router.post('/takedown', async (req, res) => {
   }
 });
 
+// GET /api/admin/export-backup - 1-Click Export Site Configuration Backup JSON
+router.get('/export-backup', async (req, res) => {
+  try {
+    const games = await db.getAllGames();
+    const announcement = await db.getActiveAnnouncement();
+    const features = await db.getFeatureSettings();
+    const proConfig = await db.getProPageConfig();
+    const hwidBans = await db.getBannedHardwareList();
+
+    const backupData = {
+      version: '3.0.0',
+      exportedAt: new Date().toISOString(),
+      exportedBy: req.adminUser.username,
+      games: games || [],
+      announcement: announcement || null,
+      features: features || {},
+      proConfig: proConfig || {},
+      hwidBans: hwidBans || []
+    };
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Content-Disposition', `attachment; filename=nitro_backup_${Date.now()}.json`);
+    res.json(backupData);
+  } catch (err) {
+    console.error('export-backup error:', err);
+    res.status(500).json({ error: 'Failed to generate site backup.' });
+  }
+});
+
+// POST /api/admin/import-backup - 1-Click Import Site Backup JSON
+router.post('/import-backup', async (req, res) => {
+  const { backup } = req.body;
+  if (!backup || typeof backup !== 'object') {
+    return res.status(400).json({ error: 'Valid site backup JSON object is required.' });
+  }
+
+  try {
+    let importedItemsCount = 0;
+    if (Array.isArray(backup.games)) {
+      for (const g of backup.games) {
+        if (g.title && g.iframeUrl) {
+          await db.saveGame(g);
+          importedItemsCount++;
+        }
+      }
+    }
+
+    if (backup.announcement) {
+      await db.updateActiveAnnouncement(backup.announcement.title, backup.announcement.message, backup.announcement.type);
+    }
+
+    await db.createModerationLog('IMPORT_BACKUP', req.adminUser.username, 'System', `Imported site backup created on ${backup.exportedAt || 'unknown'}`);
+    res.json({ success: true, message: `✅ Site backup restored successfully! Processed ${importedItemsCount} catalog items.` });
+  } catch (err) {
+    console.error('import-backup error:', err);
+    res.status(500).json({ error: 'Failed to restore site backup.' });
+  }
+});
+
 module.exports = router;
+

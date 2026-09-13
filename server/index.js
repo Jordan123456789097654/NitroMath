@@ -407,6 +407,8 @@ app.use('/api/shop', require('./routes/shop'));
 app.use('/api/themes', require('./routes/themes'));
 app.use('/api/tournaments', require('./routes/tournaments'));
 app.use('/api/raffles', require('./routes/raffles'));
+app.use('/api/squads', require('./routes/squads'));
+app.use('/api/trading', require('./routes/trading'));
 app.use('/', require('./routes/legal'));
 
 // GET /api/weather - Proxy wttr.in with curl user-agent to ensure clean plain-text return

@@ -554,5 +554,140 @@ router.post('/generate-image', async (req, res) => {
   }
 });
 
+// POST /api/ai/proofread - AI Essay Proofreader & Grammar Enhancer
+router.post('/proofread', async (req, res) => {
+  if (!systemState.isAiEnabled()) {
+    return res.status(503).json({ error: 'Nitro AI is currently under maintenance.', maintenance: true });
+  }
+
+  const { text, tone } = req.body;
+  if (!text || !text.trim()) {
+    return res.status(400).json({ error: 'Essay text is required.' });
+  }
+
+  const targetTone = tone || 'Academic';
+  const prompt = `You are a world-class academic editor and writing consultant. Analyze the following text for grammar, punctuation, vocabulary, and tone adherence (${targetTone}).
+Output ONLY raw valid JSON matching this schema:
+{
+  "originalText": string,
+  "correctedText": string,
+  "enhancedText": string,
+  "toneScore": number (0-100),
+  "corrections": [
+    { "type": "Grammar" | "Spelling" | "Vocabulary" | "Tone", "original": string, "suggestion": string, "explanation": string }
+  ]
+}
+
+Text to proofread:
+"""
+${text.trim().substring(0, 4000)}
+"""`;
+
+  try {
+    const messages = [
+      { role: 'system', content: 'You are an expert essay proofreader. Output only raw JSON.' },
+      { role: 'user', content: prompt }
+    ];
+    const raw = await callGroq(messages, false, GROQ_TEXT_MODEL, 0.3);
+    if (!raw) return res.status(503).json({ error: 'Proofreading service unavailable.' });
+
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('Invalid JSON format');
+    const result = JSON.parse(jsonMatch[0]);
+
+    res.json({ success: true, result });
+  } catch (err) {
+    console.error('Proofread error:', err);
+    res.status(500).json({ error: 'Failed to proofread text.' });
+  }
+});
+
+// POST /api/ai/humanize - AI Text Humanizer
+router.post('/humanize', async (req, res) => {
+  if (!systemState.isAiEnabled()) {
+    return res.status(503).json({ error: 'Nitro AI is currently under maintenance.', maintenance: true });
+  }
+
+  const { text, intensity } = req.body;
+  if (!text || !text.trim()) {
+    return res.status(400).json({ error: 'Text to humanize is required.' });
+  }
+
+  const prompt = `You are an expert writing coach specializing in naturalizing AI-generated content into human writing.
+Rewrite the following text so it reads 100% like authentic human writing.
+Guidelines:
+- Vary sentence length and structure (burstiness).
+- Eliminate robotic transitions (e.g. "Furthermore", "In conclusion", "It is important to note").
+- Use active, engaging verbs and natural phrasing.
+- Preserve the exact meaning and key facts.
+
+Text to humanize:
+"""
+${text.trim().substring(0, 4000)}
+"""`;
+
+  try {
+    const messages = [
+      { role: 'system', content: 'You rewrite AI text into natural human prose.' },
+      { role: 'user', content: prompt }
+    ];
+    const humanized = await callGroq(messages, false, GROQ_TEXT_MODEL, 0.7);
+    if (!humanized) return res.status(503).json({ error: 'Humanizer service unavailable.' });
+
+    res.json({ success: true, humanizedText: humanized.trim() });
+  } catch (err) {
+    console.error('Humanize error:', err);
+    res.status(500).json({ error: 'Failed to humanize text.' });
+  }
+});
+
+// POST /api/ai/plagiarism-check - AI Plagiarism & Originality Scanner
+router.post('/plagiarism-check', async (req, res) => {
+  if (!systemState.isAiEnabled()) {
+    return res.status(503).json({ error: 'Nitro AI is currently under maintenance.', maintenance: true });
+  }
+
+  const { text } = req.body;
+  if (!text || !text.trim()) {
+    return res.status(400).json({ error: 'Text for originality scan is required.' });
+  }
+
+  const prompt = `Analyze the following text for plagiarism, generic AI-generated clichés, and originality metrics.
+Output ONLY raw valid JSON matching this schema:
+{
+  "originalityScore": number (0-100),
+  "aiDetectionScore": number (0-100),
+  "status": "High Originality" | "Moderate AI Risk" | "High Plagiarism Risk",
+  "flaggedPhrases": [
+    { "phrase": string, "reason": string }
+  ],
+  "recommendations": [ string ]
+}
+
+Text to scan:
+"""
+${text.trim().substring(0, 4000)}
+"""`;
+
+  try {
+    const messages = [
+      { role: 'system', content: 'You are an academic integrity and plagiarism detection analyzer. Output only raw JSON.' },
+      { role: 'user', content: prompt }
+    ];
+    const raw = await callGroq(messages, false, GROQ_TEXT_MODEL, 0.3);
+    if (!raw) return res.status(503).json({ error: 'Plagiarism scan unavailable.' });
+
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('Invalid JSON format');
+    const scan = JSON.parse(jsonMatch[0]);
+
+    res.json({ success: true, scan });
+  } catch (err) {
+    console.error('Plagiarism check error:', err);
+    res.status(500).json({ error: 'Failed to complete originality scan.' });
+  }
+});
+
 module.exports = router;
+
 

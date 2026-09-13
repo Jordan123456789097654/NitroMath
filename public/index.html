@@ -973,6 +973,128 @@
     </div>
   </div>
 
+  <!-- AI ESSAY PROOFREADER, PLAGIARISM & HUMANIZER MODAL -->
+  <div class="modal-overlay" id="proofreader-modal" style="display: none;">
+    <div class="modal-card" style="max-width: 840px; width: 92vw; max-height: 88vh; padding: 24px; overflow-y: auto;">
+      <button class="modal-close" id="proofreader-modal-close" onclick="document.getElementById('proofreader-modal').style.display='none'">✕</button>
+
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <span style="font-size: 2rem;">📝</span>
+        <div>
+          <h2 style="color: #38bdf8; margin: 0; font-size: 1.4rem; font-weight: 800;">AI Essay Proofreader & Humanizer Studio</h2>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin: 2px 0 0;">Real-time grammar checking, tone adjustment, vocabulary enhancement, and AI text humanizing.</p>
+        </div>
+      </div>
+
+      <form id="proofread-form" style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <label style="font-size: 0.8rem; font-weight: 700; color: #cbd5e1;">Target Tone:</label>
+            <select id="proofread-tone-select" style="padding: 6px 12px; background: #151b2b; border: 1px solid var(--card-border); color: #fff; border-radius: 6px; font-size: 0.82rem;">
+              <option value="Academic" selected>🎓 Academic (Formal)</option>
+              <option value="Professional">💼 Professional (Corporate)</option>
+              <option value="Casual">☕ Casual (Friendly)</option>
+              <option value="Persuasive">🔥 Persuasive (Debate)</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="submit" class="btn-pill primary" style="background: #38bdf8; color: #000; font-weight: 800; padding: 8px 18px;">✨ Proofread & Enhance</button>
+            <button type="button" id="proofread-humanize-btn" class="btn-pill" style="background: rgba(168,85,247,0.15); border: 1px solid #a855f7; color: #c084fc; font-weight: 800; padding: 8px 18px;">✨ Humanize AI Text</button>
+            <button type="button" id="proofread-plagiarism-btn" class="btn-pill" style="background: rgba(251,191,36,0.15); border: 1px solid #fbbf24; color: #fbbf24; font-weight: 800; padding: 8px 18px;">🔍 Originality Scan</button>
+          </div>
+        </div>
+
+        <textarea id="proofread-text-input" rows="7" placeholder="Paste your essay, paper, or text paragraph here..." style="width: 100%; padding: 14px; background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); color: #fff; border-radius: 10px; font-size: 0.88rem; outline: none; resize: vertical; line-height: 1.5;"></textarea>
+      </form>
+
+      <div style="margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div>
+          <h4 style="color: #fff; margin: 0 0 8px 0; font-size: 0.95rem;">Enhanced Output</h4>
+          <div id="proofread-output-box" style="background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); border-radius: 10px; padding: 14px; min-height: 140px; color: #cbd5e1; font-size: 0.85rem;">
+            Click 'Proofread & Enhance' or 'Humanize AI Text' above to generate analysis.
+          </div>
+        </div>
+
+        <div>
+          <h4 style="color: #fff; margin: 0 0 8px 0; font-size: 0.95rem;">Corrections Breakdown</h4>
+          <div id="proofread-corrections-list" style="background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); border-radius: 10px; padding: 14px; min-height: 140px; display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto;">
+            <div style="color: #94a3b8; font-size: 0.8rem; text-align: center; padding-top: 40px;">No corrections detected yet.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SQUADS & GUILDS MODAL -->
+  <div class="modal-overlay" id="squads-modal" style="display: none;">
+    <div class="modal-card" style="max-width: 760px; width: 92vw; max-height: 88vh; padding: 24px; overflow-y: auto;">
+      <button class="modal-close" id="squads-modal-close">✕</button>
+
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <span style="font-size: 2rem;">🛡️</span>
+        <div>
+          <h2 style="color: #38bdf8; margin: 0; font-size: 1.4rem; font-weight: 800;">Student Squads & Guilds Hub</h2>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin: 2px 0 0;">Create student squads, compete in squad leaderboards, and share private chat rooms.</p>
+        </div>
+      </div>
+
+      <!-- Create Squad Form -->
+      <form id="create-squad-form" style="background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px;">
+        <strong style="color: #fbbf24; font-size: 0.95rem;">+ Create New Student Squad</strong>
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
+          <input type="text" id="squad-name-input" required placeholder="Squad Name (e.g. Apex Coders)..." style="padding: 8px 12px; background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); color: #fff; border-radius: 6px; font-size: 0.85rem;">
+          <input type="text" id="squad-tag-input" required placeholder="Tag (e.g. NTR)..." maxlength="5" style="padding: 8px 12px; background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); color: #fff; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase;">
+          <select id="squad-emblem-select" style="padding: 8px 10px; background: #151b2b; border: 1px solid var(--card-border); color: #fff; border-radius: 6px; font-size: 0.85rem;">
+            <option value="⚡">⚡ Lightning</option>
+            <option value="👾">👾 Cyber</option>
+            <option value="📐">📐 STEM</option>
+            <option value="🔥">🔥 Inferno</option>
+            <option value="👑">👑 Elite</option>
+          </select>
+        </div>
+        <input type="text" id="squad-desc-input" placeholder="Squad description or study goal..." style="padding: 8px 12px; background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); color: #fff; border-radius: 6px; font-size: 0.85rem;">
+        <button type="submit" class="btn-pill primary" style="background: #fbbf24; color: #000; font-weight: 800; align-self: flex-end; padding: 8px 20px;">🛡️ Form Squad</button>
+      </form>
+
+      <h3 style="color: #fff; margin: 0 0 12px 0; font-size: 1.05rem;">Active Squads Ranking</h3>
+      <div id="squads-list-container" style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="color: var(--text-muted); padding: 20px; text-align: center;">Loading squads...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYER TRADING MODAL -->
+  <div class="modal-overlay" id="trading-modal" style="display: none;">
+    <div class="modal-card" style="max-width: 720px; width: 92vw; max-height: 88vh; padding: 24px; overflow-y: auto;">
+      <button class="modal-close" id="trading-modal-close">✕</button>
+
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <span style="font-size: 2rem;">🛍️</span>
+        <div>
+          <h2 style="color: #10b981; margin: 0; font-size: 1.4rem; font-weight: 800;">Player-to-Player Item Trading</h2>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin: 2px 0 0;">Trade custom chat glows, avatar borders, and title flairs with other online users.</p>
+        </div>
+      </div>
+
+      <!-- Create Trade Offer Form -->
+      <form id="create-trade-form" style="background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px;">
+        <strong style="color: #10b981; font-size: 0.95rem;">+ Create Trade Offer</strong>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 120px; gap: 10px;">
+          <input type="text" id="trade-offered-input" required placeholder="Item Offered (e.g. ⚡ Golden Glow)..." style="padding: 8px 12px; background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); color: #fff; border-radius: 6px; font-size: 0.85rem;">
+          <input type="text" id="trade-requested-input" required placeholder="Item Wanted (e.g. 🌈 Rainbow)..." style="padding: 8px 12px; background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); color: #fff; border-radius: 6px; font-size: 0.85rem;">
+          <input type="number" id="trade-coins-input" placeholder="+ Coins" min="0" style="padding: 8px 10px; background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); color: #fff; border-radius: 6px; font-size: 0.85rem;">
+        </div>
+        <button type="submit" class="btn-pill primary" style="background: #10b981; color: #000; font-weight: 800; align-self: flex-end; padding: 8px 20px;">🛍️ Publish Trade Offer</button>
+      </form>
+
+      <h3 style="color: #fff; margin: 0 0 12px 0; font-size: 1.05rem;">Live P2P Marketplace Offers</h3>
+      <div id="trade-offers-container" style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="color: var(--text-muted); padding: 20px; text-align: center;">Loading trade offers...</div>
+      </div>
+    </div>
+  </div>
+
   <!-- CUSTOM THEME CREATOR STUDIO MODAL -->
   <div class="modal-overlay" id="custom-theme-modal">
     <div class="modal-card" style="max-width: 580px;">
@@ -2358,6 +2480,28 @@
                   <span class="slider"></span>
                 </div>
               </label>
+
+              <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                <div>
+                  <strong style="display: block; font-size: 0.95rem; color: #38bdf8;">🖥️ CRT Retro Monitor Shader Overlay</strong>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Enable retro arcade CRT scanlines, screen flicker, and curved phosphor glow.</span>
+                </div>
+                <div class="switch">
+                  <input type="checkbox" id="crt-shader-toggle-checkbox">
+                  <span class="slider"></span>
+                </div>
+              </label>
+
+              <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                <div>
+                  <strong style="display: block; font-size: 0.95rem; color: #fbbf24;">🔊 UI Sound Effects Pack (Web Audio Synthesized)</strong>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Play retro 8-bit click, tab switch, and button interaction sounds.</span>
+                </div>
+                <div class="switch">
+                  <input type="checkbox" id="ui-sounds-toggle-checkbox" checked>
+                  <span class="slider"></span>
+                </div>
+              </label>
             </div>
           </div>
 
@@ -2528,6 +2672,57 @@
               🚀 Launch AI Assistant Modal
             </button>
           </div>
+        </div>
+
+        <!-- App Card 1b: AI Essay Proofreader & Humanizer -->
+        <div style="background: rgba(14, 18, 30, 0.8); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 22px; backdrop-filter: blur(16px); display: flex; flex-direction: column; justify-content: space-between; gap: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <span style="font-size: 2.2rem;">📝</span>
+              <span style="font-size: 0.72rem; font-weight: 800; background: rgba(139,92,246,0.15); border: 1px solid #8b5cf6; color: #c084fc; padding: 3px 10px; border-radius: 99px;">AI HUMANIZER</span>
+            </div>
+            <h3 style="color: #fff; margin: 0 0 8px 0; font-size: 1.2rem; font-weight: 800;">AI Essay Proofreader & Humanizer Studio</h3>
+            <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Grammar checking, tone adjustment (Academic/Casual), vocabulary enhancement, and text humanizing with originality scanning.
+            </p>
+          </div>
+          <button class="btn-pill primary" onclick="document.getElementById('proofreader-modal').style.display='flex'" style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff; font-weight: 800; border: none; padding: 10px 20px; width: 100%; justify-content: center;">
+            📝 Open Essay Proofreader & Humanizer
+          </button>
+        </div>
+
+        <!-- App Card 1c: Student Squads & Guilds -->
+        <div style="background: rgba(14, 18, 30, 0.8); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 16px; padding: 22px; backdrop-filter: blur(16px); display: flex; flex-direction: column; justify-content: space-between; gap: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <span style="font-size: 2.2rem;">🛡️</span>
+              <span style="font-size: 0.72rem; font-weight: 800; background: rgba(251,191,36,0.15); border: 1px solid #fbbf24; color: #fbbf24; padding: 3px 10px; border-radius: 99px;">GUILDS ENGINE</span>
+            </div>
+            <h3 style="color: #fff; margin: 0 0 8px 0; font-size: 1.2rem; font-weight: 800;">Student Squads & Guilds Hub</h3>
+            <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Form student squads, compete in squad leaderboards, earn team XP, and share private squad chat rooms.
+            </p>
+          </div>
+          <button class="btn-pill primary" onclick="document.getElementById('squads-modal').style.display='flex'; window.fetchSquads?.();" style="background: #fbbf24; color: #000; font-weight: 800; border: none; padding: 10px 20px; width: 100%; justify-content: center;">
+            🛡️ Open Squads Hub
+          </button>
+        </div>
+
+        <!-- App Card 1d: Player-to-Player Item Trading -->
+        <div style="background: rgba(14, 18, 30, 0.8); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 22px; backdrop-filter: blur(16px); display: flex; flex-direction: column; justify-content: space-between; gap: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <span style="font-size: 2.2rem;">🛍️</span>
+              <span style="font-size: 0.72rem; font-weight: 800; background: rgba(16,185,129,0.15); border: 1px solid #10b981; color: #10b981; padding: 3px 10px; border-radius: 99px;">P2P MARKETPLACE</span>
+            </div>
+            <h3 style="color: #fff; margin: 0 0 8px 0; font-size: 1.2rem; font-weight: 800;">Player-to-Player Item Trading</h3>
+            <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Trade custom chat glows, avatar borders, and VIP title flairs with other online users in real-time.
+            </p>
+          </div>
+          <button class="btn-pill primary" onclick="document.getElementById('trading-modal').style.display='flex'; window.fetchTradeOffers?.();" style="background: #10b981; color: #000; font-weight: 800; border: none; padding: 10px 20px; width: 100%; justify-content: center;">
+            🛍️ Open P2P Trading Marketplace
+          </button>
         </div>
 
         <!-- App Card 2: Live Visitor Radar -->
@@ -2831,6 +3026,25 @@
             <input type="checkbox" id="admin-maintenance-switch">
             <span class="slider"></span>
           </label>
+        </div>
+
+        <!-- Site Backup & Restore Card -->
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; backdrop-filter: blur(12px); flex-wrap: wrap; gap: 12px;">
+          <div>
+            <strong style="font-size: 1.05rem; color: #38bdf8; display: flex; align-items: center; gap: 8px;">
+              <span>💾 Site Backup & 1-Click Disaster Recovery</span>
+            </strong>
+            <span style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; display: block;">Export or restore all catalog items, announcements, themes, and platform settings to a single .json backup file.</span>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button type="button" class="btn-pill primary" id="admin-export-backup-btn" onclick="window.location.href='/api/admin/export-backup'" style="background: #38bdf8; color: #000; font-weight: 800;">
+              📥 Export Backup (.json)
+            </button>
+            <input type="file" id="admin-import-backup-file" accept=".json" style="display: none;">
+            <button type="button" class="btn-pill" id="admin-import-backup-btn" onclick="document.getElementById('admin-import-backup-file').click()" style="background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); color: #fff; font-weight: 700;">
+              📤 Restore Backup
+            </button>
+          </div>
         </div>
 
         <!-- Metric Overview Cards -->

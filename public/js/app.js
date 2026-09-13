@@ -18,6 +18,11 @@ import { initTournaments } from './tournaments.js';
 import { initSpinWheel } from './spin.js';
 import { initRaffles } from './raffles.js';
 import { loadApps } from './apps.js';
+import { initProofreader } from './proofreader.js';
+import { initSquads } from './squads.js';
+import { initTrading } from './trading.js';
+import { initUiSounds } from './uisounds.js';
+import { initCrtShader } from './crtShader.js';
 
 export const FAVICON_MAP = {
   default: '/favicon.svg',
@@ -36,6 +41,11 @@ export const FAVICON_MAP = {
 document.addEventListener('DOMContentLoaded', () => {
   loadApps();
   initThemes();
+  initProofreader();
+  initSquads();
+  initTrading();
+  initUiSounds();
+  initCrtShader();
   initNavigation();
   initNotifications();
   initShop();

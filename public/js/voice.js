@@ -93,6 +93,25 @@ export function initVoiceRooms() {
       audioCtx.resume();
     }
   });
+
+  window.toggleScreenShare = async function() {
+    if (localScreenStream) {
+      localScreenStream.getTracks().forEach(track => track.stop());
+      localScreenStream = null;
+      alert('🖥️ Screen Share Stopped.');
+      return;
+    }
+
+    try {
+      localScreenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+      alert('🖥️ Screen Share Active! Streaming to channel members.');
+      localScreenStream.getVideoTracks()[0].onended = () => {
+        localScreenStream = null;
+      };
+    } catch (err) {
+      alert('Screen sharing cancelled or not supported by browser.');
+    }
+  };
 }
 
 function connectVoiceSocket() {
