@@ -167,8 +167,21 @@ export function initFontSelector() {
 
 export function setFontFamily(fontName) {
   localStorage.setItem('nitro_custom_font', fontName);
-  document.documentElement.style.setProperty('--font-family', `'${fontName}', sans-serif`);
-  document.body.style.fontFamily = `'${fontName}', sans-serif`;
+  const fontStack = `'${fontName}', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
+  document.documentElement.style.setProperty('--font-family', fontStack);
+  document.body.style.fontFamily = fontStack;
+
+  let fontStyle = document.getElementById('nitro-dynamic-font-override');
+  if (!fontStyle) {
+    fontStyle = document.createElement('style');
+    fontStyle.id = 'nitro-dynamic-font-override';
+    document.head.appendChild(fontStyle);
+  }
+  fontStyle.textContent = `
+    *, body, input, button, select, textarea, .nav-item, .card, .modal-content, h1, h2, h3, h4, h5, h6, p, span, a, label {
+      font-family: ${fontStack} !important;
+    }
+  `;
 }
 
 // 4. Live Visitor Radar
