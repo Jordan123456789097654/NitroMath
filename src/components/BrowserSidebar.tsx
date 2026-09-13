@@ -53,12 +53,12 @@ interface SidebarProps {
 
 const SIDEBAR_FEATURES = [
   { icon: Gamepad2, label: marks.a(), url: hrefs.g() },
-  { icon: Bot, label: "AI", url: "petezah://ai" },
+  { icon: Bot, label: "Nitro AI", url: "petezah://ai" },
   { icon: Music, label: marks.music(), url: hrefs.mu() },
   { icon: Film, label: marks.movies(), url: hrefs.mo() },
-  { icon: Monitor, label: "VM", url: "petezah://vm" },
-  { icon: MessageCircle, label: "Chat", url: "petezah://chat" },
-  { icon: Wrench, label: "Tools", url: "petezah://tools" },
+  { icon: Monitor, label: "Firefox VM", url: "petezah://vm" },
+  { icon: MessageCircle, label: "Global Chat", url: "petezah://chat" },
+  { icon: Wrench, label: "Dev Tools", url: "petezah://tools" },
 ];
 
 export default function Sidebar({
