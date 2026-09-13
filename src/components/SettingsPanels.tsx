@@ -20,6 +20,8 @@ import { PX } from "@/lib/px";
 import { originWsHost } from "@/lib/siteOrigin";
 import { hrefs, marks } from "@/lib/uiMarks";
 import ObfuscatedText from "./ObfuscatedText";
+import LiveVisitorRadar from "./LiveVisitorRadar";
+import NetworkPingTester from "./NetworkPingTester";
 import {
   SHORTCUT_META,
   DEFAULT_SHORTCUTS,
@@ -473,6 +475,9 @@ export function AppearanceSettings(props: Props) {
           }}
         />
       </div>
+
+      <NetworkPingTester C={C} />
+      <LiveVisitorRadar C={C} />
 
       <ApplyBtn C={C} saved={settingsSaved} onClick={applySettings} />
     </div>

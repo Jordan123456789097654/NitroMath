@@ -25,6 +25,8 @@ import { applyVpnRegion } from "@/lib/vpn";
 import { themeById, applyBrowserIdentity } from "@/lib/siteThemes";
 import { AppearanceSettings, BehaviorSettings, ProxySettings, ShortcutsSettings } from "./SettingsPanels";
 import { AdReportsPanel } from "./AdReportsPanel";
+import LiveVisitorRadar from "./LiveVisitorRadar";
+import NetworkPingTester from "./NetworkPingTester";
 import { createPortal } from "react-dom";
 
 interface AuthUser {
