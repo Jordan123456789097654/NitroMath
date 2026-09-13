@@ -9,6 +9,46 @@ export type SiteTheme = {
 
 export const SITE_THEMES: SiteTheme[] = [
   {
+    id: "oled-dark",
+    label: "OLED Dark",
+    bg: "#000000",
+    text: "#ffffff",
+    accent: "#38bdf8",
+    fog: { highlight: 0x111111, mid: 0x050505, low: 0x000000, base: 0x000000, net: 0x00f0ff },
+  },
+  {
+    id: "cyberpunk-2077",
+    label: "Cyberpunk 2077",
+    bg: "#0d0f18",
+    text: "#ffee00",
+    accent: "#ff0055",
+    fog: { highlight: 0xff0055, mid: 0xffee00, low: 0x0d0f18, base: 0x0d0f18, net: 0x00ffff },
+  },
+  {
+    id: "midnight-purple",
+    label: "Midnight Purple",
+    bg: "#0b0518",
+    text: "#f3e8ff",
+    accent: "#a855f7",
+    fog: { highlight: 0x6b21a8, mid: 0x3b0764, low: 0x0b0518, base: 0x0b0518, net: 0xc084fc },
+  },
+  {
+    id: "cherry-blossom",
+    label: "Cherry Blossom",
+    bg: "#160b13",
+    text: "#ffe4e6",
+    accent: "#fb7185",
+    fog: { highlight: 0x9f1239, mid: 0x4c0519, low: 0x160b13, base: 0x160b13, net: 0xf43f5e },
+  },
+  {
+    id: "crt-matrix",
+    label: "CRT Matrix",
+    bg: "#021206",
+    text: "#4ade80",
+    accent: "#22c55e",
+    fog: { highlight: 0x166534, mid: 0x052e16, low: 0x021206, base: 0x021206, net: 0x10b981 },
+  },
+  {
     id: "default",
     label: "Default",
     bg: "#020810",

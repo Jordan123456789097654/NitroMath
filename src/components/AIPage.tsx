@@ -119,23 +119,25 @@ function saveLocalConvos(
   } catch {}
 }
 
-const DEFAULT_MODEL = "openai/gpt-oss-20b";
+const DEFAULT_MODEL = "kyro-ultra-70b";
 
 const MODELS = [
-  { value: DEFAULT_MODEL, label: "GPT-OSS 20B (Fast)" },
-  { value: "openai/gpt-oss-120b", label: "GPT-OSS 120B" },
+  { value: "kyro-ultra-70b", label: "Kyro Ultra 70B (Llama 3.3)" },
+  { value: "kyro-coder-pro", label: "Kyro Coder Pro (Code & Sandbox)" },
+  { value: "kyro-flash-8b", label: "Kyro Flash 8B (Ultra Fast)" },
+  { value: "deepseek-r1-distill-llama-70b", label: "DeepSeek R1 Reasoning 70B" },
+  { value: "qwen-qwq-32b", label: "Qwen QwQ 32B Reasoning" },
 ];
 
-const VISION_MODEL = "qwen/qwen3.6-27b";
+const VISION_MODEL = "kyro-coder-pro";
 
 const ALLOWED_MODELS = new Set(MODELS.map((m) => m.value));
 
 const MODEL_ALIASES: Record<string, string> = {
-  "llama-3.1-8b-instant": DEFAULT_MODEL,
-  "llama-3.3-70b-versatile": "openai/gpt-oss-120b",
-  "llama3-8b-8192": DEFAULT_MODEL,
-  "llama3-70b-8192": "openai/gpt-oss-120b",
-  "qwen/qwen3-32b": "openai/gpt-oss-120b",
+  "llama-3.1-8b-instant": "kyro-flash-8b",
+  "llama-3.3-70b-versatile": "kyro-ultra-70b",
+  "openai/gpt-oss-20b": "kyro-ultra-70b",
+  "openai/gpt-oss-120b": "kyro-coder-pro",
 };
 
 function resolveStoredModel() {
@@ -148,16 +150,13 @@ function resolveStoredModel() {
 }
 
 const SUGGESTIONS = [
-  { icon: Atom, text: "Explain quantum computing in simple terms" },
-  { icon: Code2, text: "Python JSON parser from an API endpoint" },
-  { icon: Lightbulb, text: "Creative startup ideas in the AI space" },
-  { icon: Sparkles, text: "Dark sci-fi story about a rogue AI" },
+  { icon: Atom, text: "Math Solver: Solve 3x^2 - 12x + 9 = 0 step-by-step" },
+  { icon: Code2, text: "Code Debugger: Fix memory leak in React useEffect timer" },
+  { icon: Lightbulb, text: "Essay Drafter: Outline an essay on Renewable Energy impacts" },
+  { icon: Sparkles, text: "Physics Assistant: Explain Newton's Third Law with examples" },
 ];
 
-const SYSTEM_PROMPT = `You are PeteAI, a helpful and friendly AI assistant developed by PeteZah. Keep responses concise and natural. When answering educational or factual questions, format your response as:
-Answer: [direct answer]
-[brief explanation if needed]
-For casual conversation, just respond naturally and briefly. Never reference the conversation format or mention "previous messages". Just respond naturally as if in a real conversation.`;
+const SYSTEM_PROMPT = `You are Nitro AI Homework Assistant & Groq Assistant. You specialize in math problem solving, code debugging, and essay drafting/outlining. Keep responses structured, precise, and easy to read. For math problems, show detailed step-by-step steps. For code debugging, point out the exact bug and provide clean fixed code.`;
 
 function TypingDots() {
   return (

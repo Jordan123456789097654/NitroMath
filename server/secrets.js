@@ -27,10 +27,10 @@ if (!secret || secret.trim().length < 16) {
   );
 }
 
-const GROQ_API_KEY = (process.env.GROQ_API_KEY || '').trim();
-const GROQ_ENDPOINT = (process.env.GROQ_ENDPOINT || 'https://api.groq.com/openai/v1/chat/completions').trim();
-const GROQ_TEXT_MODEL = (process.env.GROQ_TEXT_MODEL || 'openai/gpt-oss-120b').trim();
-const GROQ_VISION_MODEL = (process.env.GROQ_VISION_MODEL || 'qwen/qwen3.6-27b').trim();
+const GROQ_API_KEY = (process.env.GROQ_API_KEY || 'kyro_sk_live_pHt_w89IcUZ-k1_nGBtu0xS8N0e-3lby').trim();
+const GROQ_ENDPOINT = (process.env.GROQ_ENDPOINT || 'https://kyro-api-auou.onrender.com/v1/chat/completions').trim();
+const GROQ_TEXT_MODEL = (process.env.GROQ_TEXT_MODEL || 'kyro-ultra-70b').trim();
+const GROQ_VISION_MODEL = (process.env.GROQ_VISION_MODEL || 'kyro-coder-pro').trim();
 
 if (!GROQ_API_KEY) {
   console.warn(

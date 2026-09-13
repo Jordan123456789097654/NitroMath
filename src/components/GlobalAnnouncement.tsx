@@ -25,8 +25,18 @@ export default function GlobalAnnouncement() {
         setItem(d.announcement);
       })
       .catch(() => {});
+
+    // WebSocket real-time live push listener
+    const handlePushEvent = (e: any) => {
+      if (e.detail?.announcement) {
+        setItem(e.detail.announcement);
+      }
+    };
+    window.addEventListener("nitro-live-announcement", handlePushEvent);
+
     return () => {
       cancelled = true;
+      window.removeEventListener("nitro-live-announcement", handlePushEvent);
     };
   }, []);
 
