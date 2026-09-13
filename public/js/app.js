@@ -113,8 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  initDevToolsProtection();
-
   const adminLoginBtn = document.getElementById('maintenance-admin-login-btn');
   if (adminLoginBtn) {
     adminLoginBtn.addEventListener('click', () => {
@@ -1907,56 +1905,7 @@ function initSuggestAndBugModals() {
   }
 }
 
-function initDevToolsProtection() {
-  function isOwner() {
-    const user = getCurrentUser();
-    if (user && (user.role === 'owner' || (user.username && user.username.toLowerCase() === 'jordandaniels'))) {
-      return true;
-    }
-    try {
-      const token = localStorage.getItem('nitro_jwt_token') || sessionStorage.getItem('nitro_jwt_token');
-      if (token) {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        if (payload && (payload.role === 'owner' || (payload.username && payload.username.toLowerCase() === 'jordandaniels'))) {
-          return true;
-        }
-      }
-    } catch(e) {}
-    return false;
-  }
 
-  function purgeAndLockdown() {
-    if (isOwner()) return; // Owner Bypass
-
-    console.clear();
-    // Wipe all script tags to prevent script theft
-    document.querySelectorAll('script').forEach(s => s.remove());
-
-    document.body.innerHTML = `
-      <div style="background: #090a0f; color: #ef4444; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center; padding: 20px; box-sizing: border-box;">
-        <div style="font-size: 4rem; margin-bottom: 12px;">🛡️</div>
-        <h2 style="font-size: 2.2rem; background: linear-gradient(90deg, #ef4444, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 12px; font-weight: 900;">DevTools Inspection Denied</h2>
-        <p style="color: #94a3b8; max-width: 520px; line-height: 1.6; font-size: 1rem; margin-bottom: 20px;">Platform scripts and custom assets are protected against unauthorized inspection. Developer tools access is restricted to the platform owner.</p>
-        <button onclick="window.location.reload()" style="padding: 10px 24px; background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #ef4444; border-radius: 99px; font-weight: 800; cursor: pointer;">🔄 Reload Site</button>
-      </div>
-    `;
-  }
-
-  // Block DevTools shortcuts for non-owners
-  document.addEventListener('keydown', (e) => {
-    if (isOwner()) return;
-
-    if (
-      e.key === 'F12' ||
-      (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) ||
-      (e.ctrlKey && ['U', 'u', 'S', 's'].includes(e.key))
-    ) {
-      e.preventDefault();
-      e.stopPropagation();
-      purgeAndLockdown();
-    }
-  }, true);
-}
 
 async function initWeatherClock() {
   const clockEl = document.getElementById('header-clock');
