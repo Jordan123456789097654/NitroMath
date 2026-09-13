@@ -17,6 +17,7 @@ import { initShop } from './shop.js';
 import { initTournaments } from './tournaments.js';
 import { initSpinWheel } from './spin.js';
 import { initRaffles } from './raffles.js';
+import { loadApps } from './apps.js';
 
 export const FAVICON_MAP = {
   default: '/favicon.svg',
@@ -33,7 +34,7 @@ export const FAVICON_MAP = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  initParticleCanvas();
+  loadApps();
   initThemes();
   initNavigation();
   initNotifications();
